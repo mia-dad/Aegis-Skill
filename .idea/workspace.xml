@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="aca41360-ab30-4845-90e7-4b503e090930" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/exception/LLMInvocationException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/llm/LLMAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/llm/LLMAdapterRegistry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/tools/DefaultToolRegistry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/resources/messages_en_US.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/resources/messages_zh_CN.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/exception/SkillExceptionTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/exception/SkillExecutionExceptionTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/exception/ToolExecutionExceptionTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/tools/ToolProviderTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/tools/ToolSchemaTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/tools/ValidationResultTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-tools/src/main/java/com/mia/aegis/skill/tools/ToolRegistry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 2
+}]]></component>
+  <component name="ProjectId" id="396tXdCttZb7y5ojHES3EdaNKcA" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.aegis [clean].executor": "Run",
+    "Maven.aegis [compile].executor": "Run",
+    "Maven.aegis [package].executor": "Run",
+    "Maven.aegis-skill-dsl [clean].executor": "Run",
+    "Maven.aegis-skill-dsl [compile].executor": "Run",
+    "Maven.aegis-skill-dsl [package].executor": "Run",
+    "Maven.aegis-skill-tools [compile].executor": "Run",
+    "Maven.aegis-skill-tools [install].executor": "Run",
+    "Maven.aegis-skill-tools [package].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/works/aegis/aegis-skill-dsl/src/test/java/com/mia/aegis/skill",
+    "project.structure.last.edited": "模块",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\works\aegis\aegis-skill-dsl\src\test\java\com\mia\aegis\skill" />
+      <recent name="D:\works\aegis\aegis-skill-dsl\src\test\java\com\mia\aegis\skill\exception" />
+      <recent name="D:\works\aegis\aegis-skill-dsl\src\main\resources" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="aca41360-ab30-4845-90e7-4b503e090930" name="更改" comment="" />
+      <created>1770028395620</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1770028395620</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../Ageis重构/Aegis/aegis-skill-dsl/src/main/java/com/aegis/skill/spi/DefaultToolRegistry.java</url>
+          <line>84</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
