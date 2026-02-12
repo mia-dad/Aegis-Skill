@@ -29,3 +29,15 @@ target/
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# Compiled class files outside target
+*.class
+
+# Obsidian
+.obsidian/
+
+# Windows artifacts
+nul
+
+# skill-web (separate git repo)
+skill-web/

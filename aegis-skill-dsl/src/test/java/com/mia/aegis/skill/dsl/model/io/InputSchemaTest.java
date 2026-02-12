@@ -132,7 +132,7 @@ class InputSchemaTest {
         // 匹配实际的中文输出
         assertThat(schema.toString()).contains("技能入参");
         assertThat(schema.toString()).contains("name");
-        assertThat(schema.toString()).contains("fields");
+        assertThat(schema.toString()).contains("FieldSpec");
     }
 
     @Test

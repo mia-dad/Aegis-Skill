@@ -14,7 +14,7 @@ public class PromptStepConfig implements StepConfig {
     /**
      * 创建 Prompt Step 配置。
      *
-     * @param template Prompt 模板（支持 {{var}} 和 {{step.output}} 语法）
+     * @param template Prompt 模板（支持 {{var}} 和 {{step.value}} 语法）
      */
     public PromptStepConfig(String template) {
         if (template == null || template.trim().isEmpty()) {

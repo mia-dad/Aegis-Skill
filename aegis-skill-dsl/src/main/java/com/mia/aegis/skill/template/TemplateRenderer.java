@@ -10,18 +10,21 @@ import java.util.Map;
 /**
  * 模板渲染器接口。
  *
- * <p>用于渲染包含 {{variable}} 语法的模板字符串。</p>
+ * <p>用于渲染包含 Aegis 模板语法的字符串。</p>
  *
- * <p>Supported Syntax:</p>
+ * <p>支持的语法：</p>
  * <ul>
- *   <li>{@code {{variable}}} - 引用输入参数</li>
- *   <li>{@code {{step.output}}} - 引用前置 Step 输出</li>
- *   <li>{@code {{context.key}}} - 引用运行时上下文</li>
+ *   <li>{@code {{variable}}} — 变量替换</li>
+ *   <li>{@code {{a.b.c}}} — 嵌套属性访问</li>
+ *   <li>{@code {{a + b}}}, {@code {{a * b}}} — 表达式求值（四则运算）</li>
+ *   <li>{@code {{arr[0]}}}, {@code {{arr[#var]}}} — 数组索引</li>
+ *   <li>{@code {{#for items}}...{{/for}}} — 循环渲染</li>
+ *   <li>{@code {{_}}} — 当前循环元素</li>
  * </ul>
  *
- * <p>Usage:</p>
+ * <p>用法：</p>
  * <pre>{@code
- * TemplateRenderer renderer = new MustacheTemplateRenderer();
+ * TemplateRenderer renderer = new AegisTemplateRenderer();
  * String result = renderer.render("Hello {{name}}!", context);
  * }</pre>
  */

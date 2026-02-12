@@ -9,19 +9,33 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>aegis-skill-dsl</module>
+        <!-- 核心模块 -->
         <module>aegis-skill-tools</module>
+        <module>aegis-skill-dsl</module>
+        <module>aegis-builtin-tools</module>
+
+        <!-- 技能包模块 -->
+        <module>aegis-skill-search</module>
+        <module>aegis-skill-financial</module>
+        <module>aegis-skill-sales</module>
+        <module>aegis-skill-demo</module>
+
+        <!-- 应用模块 -->
+        <module>aegis-skill-api</module>
     </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <slf4j.version>1.7.36</slf4j.version>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+         <slf4j.version>1.7.36</slf4j.version>
         <!--  Dependency versions  -->
         <commonmark.version>0.21.0</commonmark.version>
         <snakeyaml.version>1.33</snakeyaml.version>
         <jmustache.version>1.15</jmustache.version>
+        <jackson.version>2.15.3</jackson.version>
 
         <!--  Test dependency versions  -->
         <junit.version>5.10.0</junit.version>
@@ -75,6 +89,20 @@
                 <artifactId>mockito-junit-jupiter</artifactId>
                 <version>${mockito.version}</version>
                 <scope>test</scope>
+            </dependency>
+
+            <!-- Jackson Databind -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <!-- Jackson Annotations -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

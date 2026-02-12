@@ -20,14 +20,15 @@ class StepStatusTest {
                         StepStatus.RUNNING,
                         StepStatus.SUCCESS,
                         StepStatus.FAILED,
-                        StepStatus.SKIPPED
+                        StepStatus.SKIPPED,
+                        StepStatus.AWAITING
                 );
     }
 
     @Test
     @DisplayName("状态值数量应该正确")
     void shouldHaveCorrectNumberOfValues() {
-        assertThat(StepStatus.values()).hasSize(5);
+        assertThat(StepStatus.values()).hasSize(6);
     }
 
     @Test
@@ -45,6 +46,7 @@ class StepStatusTest {
         assertThat(StepStatus.SUCCESS.toString()).isEqualTo("SUCCESS");
         assertThat(StepStatus.FAILED.toString()).isEqualTo("FAILED");
         assertThat(StepStatus.SKIPPED.toString()).isEqualTo("SKIPPED");
+        assertThat(StepStatus.AWAITING.toString()).isEqualTo("AWAITING");
     }
 
     @Test
@@ -64,5 +66,6 @@ class StepStatusTest {
         assertThat(values[2]).isEqualTo(StepStatus.SUCCESS);
         assertThat(values[3]).isEqualTo(StepStatus.FAILED);
         assertThat(values[4]).isEqualTo(StepStatus.SKIPPED);
+        assertThat(values[5]).isEqualTo(StepStatus.AWAITING);
     }
 }

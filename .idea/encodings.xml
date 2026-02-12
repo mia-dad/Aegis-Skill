@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
+  <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/aegis-builtin-tools/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aegis-builtin-tools/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aegis-skill-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aegis-skill-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aegis-skill-demo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aegis-skill-demo/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/aegis-skill-dsl/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/aegis-skill-dsl/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aegis-skill-financial/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aegis-skill-financial/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aegis-skill-sales/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aegis-skill-sales/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aegis-skill-search/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aegis-skill-search/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/aegis-skill-tools/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/aegis-skill-tools/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aegis-tools/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aegis-tools/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>

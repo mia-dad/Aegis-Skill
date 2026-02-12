@@ -1,5 +1,7 @@
 package com.mia.aegis.skill.executor.context;
 
+import com.mia.aegis.skill.i18n.MessageUtil;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -82,7 +84,7 @@ public class RuntimeInfo {
 
     @Override
     public String toString() {
-        return "运行时元信息{" +
+        return MessageUtil.getMessage("runtimeinfo.tostring") +
                 "startTime=" + startTime +
                 ", elapsed=" + getElapsedTime() + "ms" +
                 '}';

@@ -14,6 +14,8 @@ import com.mia.aegis.skill.i18n.MessageUtil;
 import com.mia.aegis.skill.llm.LLMAdapter;
 import com.mia.aegis.skill.llm.LLMAdapterRegistry;
 import com.mia.aegis.skill.template.TemplateRenderer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +33,8 @@ import java.util.Optional;
  * </p>
  */
 public class PromptStepExecutor implements StepExecutor {
+
+    private static final Logger logger = LoggerFactory.getLogger(PromptStepExecutor.class);
 
     private final LLMAdapterRegistry llmRegistry;
 
@@ -74,8 +78,7 @@ public class PromptStepExecutor implements StepExecutor {
     @Override
     public StepResult execute(Step step, ExecutionContext context) throws SkillExecutionException {
         if (!supports(step)) {
-            throw new SkillExecutionException(step.getName(),
-                    new IllegalArgumentException("PromptStepExecutor only supports PROMPT type steps"));
+            throw new SkillExecutionException("PromptStepExecutor only supports PROMPT type steps");
         }
 
         long startTime = System.currentTimeMillis();
@@ -85,41 +88,59 @@ public class PromptStepExecutor implements StepExecutor {
             PromptStepConfig config = step.getPromptConfig();
             String template = config.getTemplate();
 
-            // 1. 渲染 Prompt 模板（支持 {{variable}} 和 {{step.output}} 语法）
+            logger.info("===== [Prompt Step 开始执行] =====");
+            logger.info("Step 名称: {}", stepName);
+            logger.debug("Prompt 模板: {}", template);
+
+            // 1. 渲染 Prompt 模板（支持 {{variable}} 和 {{step.value}} 语法）
             String renderedPrompt = renderPromptTemplate(template, context);
+            logger.info("渲染后的 Prompt (前1000字符): {}",
+                    renderedPrompt.length() > 1000 ? renderedPrompt.substring(0, 1000) + "..." : renderedPrompt);
+            logger.debug("完整渲染后的 Prompt: {}", renderedPrompt);
 
             // 2. 查找 LLM Adapter
             Optional<LLMAdapter> optionalAdapter = llmRegistry.getDefault();
             if (!optionalAdapter.isPresent()) {
-                throw new SkillExecutionException(stepName,
-                        new IllegalStateException("大模型实例不存在"));
+                throw new SkillExecutionException(MessageUtil.getMessage("promptstepexecutor.llm.notavailable"));
             }
             LLMAdapter adapter = optionalAdapter.get();
+            logger.info("使用 LLM Adapter: {}", adapter.getName());
 
             // 3. 调用 LLM
             Map<String, Object> options = buildOptions(context);
+            logger.debug("LLM 调用选项: {}", options);
+
             String response = adapter.invoke(renderedPrompt, options);
 
             // 处理空响应
             if (response == null || response.trim().isEmpty()) {
+                logger.warn("LLM 返回空响应");
                 long duration = System.currentTimeMillis() - startTime;
                 return StepResult.failed(stepName, "LLM returned empty response", duration);
             }
+
+            logger.info("LLM 响应成功，长度: {} 字符", response.length());
+            logger.debug("LLM 响应内容 (前1000字符): {}",
+                    response.length() > 1000 ? response.substring(0, 1000) + "..." : response);
+            logger.info("===== [Prompt Step 执行完成] =====");
 
             long duration = System.currentTimeMillis() - startTime;
             return StepResult.success(stepName, response, duration);
 
         } catch (LLMInvocationException e) {
+            logger.error("LLM 调用失败: {}", e.getMessage(), e);
             long duration = System.currentTimeMillis() - startTime;
             return StepResult.failed(stepName, "LLM invocation failed: " + e.getMessage(), duration);
         } catch (TemplateRenderException e) {
+            logger.error("Prompt 模板渲染失败: {}", e.getMessage(), e);
             long duration = System.currentTimeMillis() - startTime;
-            throw new SkillExecutionException(stepName, e);
+            throw new SkillExecutionException("Template render failed: " + e.getMessage(), e);
         } catch (SkillExecutionException e) {
             throw e;
         } catch (Exception e) {
+            logger.error("Prompt Step 执行异常: {}", e.getMessage(), e);
             long duration = System.currentTimeMillis() - startTime;
-            throw new SkillExecutionException(stepName, e);
+            throw new SkillExecutionException("Failed to execute prompt step: " + stepName, e);
         }
     }
 
@@ -134,7 +155,7 @@ public class PromptStepExecutor implements StepExecutor {
      * <p>支持以下变量引用：
      * <ul>
      *   <li>{@code {{variable}}} - 引用输入参数</li>
-     *   <li>{@code {{step_name.output}}} - 引用前置 Step 输出</li>
+     *   <li>{@code {{step_name.value}}} - 引用前置 Step 输出</li>
      *   <li>{@code {{context.key}}} - 引用运行时上下文</li>
      * </ul>
      * </p>

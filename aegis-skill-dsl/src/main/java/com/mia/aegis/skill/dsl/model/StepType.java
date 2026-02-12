@@ -5,11 +5,12 @@ import com.mia.aegis.skill.i18n.MessageUtil;
 /**
  * Step 类型枚举。
  *
- * <p>定义 Skill 中 Step 的三种执行类型：</p>
+ * <p>定义 Skill 中 Step 的四种执行类型：</p>
  * <ul>
  *   <li>{@link #TOOL} - 调用外部 Tool（HTTP API、数据库、Java Service）</li>
  *   <li>{@link #PROMPT} - 调用 LLM 模型生成响应</li>
- *   <li>{@link #COMPOSE} - 组合多个前置 Step 的输出</li>
+ *   <li>{@link #AWAIT} - 暂停 Skill 执行，等待用户提供额外输入后继续</li>
+ *   <li>{@link #TEMPLATE} - 纯文本模板渲染，不调用 LLM 也不调用 Tool</li>
  * </ul>
  */
 public enum StepType {
@@ -27,10 +28,18 @@ public enum StepType {
     PROMPT,
 
     /**
-     * Compose 类型 Step。
-     * 将多个前置 Step 的输出组合为单一结构化输出。
+     * Await 类型 Step。
+     * 暂停 Skill 执行，等待用户提供额外输入后继续。
+     * 用于人机交互控制流场景。
      */
-    COMPOSE;
+    AWAIT,
+
+    /**
+     * Template 类型 Step。
+     * 文本模板渲染（变量替换、表达式求值、循环展开），不调用 LLM 也不调用 Tool。
+     * 渲染结果直接作为 step 输出，通过 {@code {{step_name.value}}} 引用。
+     */
+    TEMPLATE;
 
     /**
      * 从字符串解析 StepType。

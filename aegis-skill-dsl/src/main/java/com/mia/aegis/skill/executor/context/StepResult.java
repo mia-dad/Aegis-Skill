@@ -69,6 +69,29 @@ public class StepResult {
     }
 
     /**
+     * 创建跳过结果（带原因）。
+     *
+     * @param stepName Step 名称
+     * @param reason 跳过原因
+     * @return StepResult 实例
+     */
+    public static StepResult skipped(String stepName, String reason) {
+        return new StepResult(stepName, StepStatus.SKIPPED, null, reason, 0);
+    }
+
+    /**
+     * 创建等待用户输入结果。
+     *
+     * @param stepName Step 名称
+     * @param awaitRequest Await 请求信息
+     * @param duration 执行耗时（通常为 0）
+     * @return StepResult 实例
+     */
+    public static StepResult awaiting(String stepName, Object awaitRequest, long duration) {
+        return new StepResult(stepName, StepStatus.AWAITING, awaitRequest, null, duration);
+    }
+
+    /**
      * 获取 Step 名称。
      *
      * @return Step 名称
@@ -129,6 +152,24 @@ public class StepResult {
      */
     public boolean isFailed() {
         return status == StepStatus.FAILED;
+    }
+
+    /**
+     * 判断是否等待用户输入。
+     *
+     * @return 是否等待
+     */
+    public boolean isAwaiting() {
+        return status == StepStatus.AWAITING;
+    }
+
+    /**
+     * 判断是否被跳过。
+     *
+     * @return 是否跳过
+     */
+    public boolean isSkipped() {
+        return status == StepStatus.SKIPPED;
     }
 
     @Override

@@ -15,6 +15,7 @@ import java.util.*;
 public class Skill {
 
     private final String id;
+    private final String version;
     private final String description;
     private final List<String> intents;
     private final InputSchema inputSchema;
@@ -26,14 +27,15 @@ public class Skill {
      * 创建 Skill。
      *
      * @param id Skill 唯一标识
+     * @param version 版本号（语义化版本，如 1.0.0）
      * @param description 描述
      * @param intents 意图标签
      * @param inputSchema 输入 Schema
      * @param steps 执行步骤
-     * @param outputContract 输出契约
+     * @param outputContract 输出契约（必需）
      * @param extensions 扩展字段
      */
-    public Skill(String id, String description, List<String> intents,
+    public Skill(String id, String version, String description, List<String> intents,
                  InputSchema inputSchema, List<Step> steps,
                  OutputContract outputContract, Map<String, Object> extensions) {
         if (id == null || id.trim().isEmpty()) {
@@ -44,13 +46,14 @@ public class Skill {
         }
 
         this.id = id.trim();
+        this.version = version;
         this.description = description;
         this.intents = intents != null
                 ? Collections.unmodifiableList(new ArrayList<String>(intents))
                 : Collections.<String>emptyList();
         this.inputSchema = inputSchema != null ? inputSchema : InputSchema.empty();
         this.steps = Collections.unmodifiableList(new ArrayList<Step>(steps));
-        this.outputContract = outputContract != null ? outputContract : OutputContract.empty();
+        this.outputContract = outputContract != null ? outputContract : new OutputContract(null, com.mia.aegis.skill.dsl.model.io.OutputFormat.TEXT, null);
         this.extensions = extensions != null
                 ? Collections.unmodifiableMap(new LinkedHashMap<String, Object>(extensions))
                 : Collections.<String, Object>emptyMap();
@@ -63,6 +66,15 @@ public class Skill {
      */
     public String getId() {
         return id;
+    }
+
+    /**
+     * 获取版本号。
+     *
+     * @return 版本号
+     */
+    public String getVersion() {
+        return version;
     }
 
     /**
@@ -167,6 +179,7 @@ public class Skill {
     public String toString() {
         return "Skill{" +
                 "id='" + id + '\'' +
+                ", version='" + version + '\'' +
                 ", steps=" + steps.size() +
                 ", intents=" + intents +
                 '}';

@@ -1,5 +1,7 @@
 package com.mia.aegis.skill.dsl.model.io;
 
+import com.mia.aegis.skill.i18n.MessageUtil;
+
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -83,7 +85,7 @@ public class InputSchema {
 
     @Override
     public String toString() {
-        return "技能入参{fields=" + fields + '}';
+        return MessageUtil.getMessage("inputschema.tostring") + fields.toString() + '}';
     }
 }
 

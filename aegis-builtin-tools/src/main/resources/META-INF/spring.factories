@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.mia.aegis.skill.tools.config.ToolsAutoConfiguration

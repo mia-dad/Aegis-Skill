@@ -7,6 +7,7 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * LLM 适配器 SPI 接口。
+ * 作用:定义了统一的调用大模型规范
  *
  * <p>用于将 Prompt Step 发送至不同的 LLM 提供商。
  * 实现类通过 Java ServiceLoader 机制发现。</p>

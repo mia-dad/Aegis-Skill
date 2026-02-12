@@ -63,15 +63,15 @@ class ToolProviderTest {
     }
 
     @Test
-    @DisplayName("应该同步执行工具")
+    @DisplayName("应该同步执行工具并写入上下文")
     void shouldExecuteToolSynchronously() throws ToolExecutionException {
         Map<String, Object> input = new HashMap<String, Object>();
         input.put("param1", "test_value");
+        MapOutputContext output = new MapOutputContext();
 
-        Object result = toolProvider.execute(input);
+        toolProvider.execute(input, output);
 
-        assertThat(result).isNotNull();
-        assertThat(result).isEqualTo("processed: test_value");
+        assertThat(output.get("result")).isEqualTo("processed: test_value");
     }
 
     @Test
@@ -79,8 +79,9 @@ class ToolProviderTest {
     void shouldThrowToolExecutionExceptionWhenExecutionFails() {
         Map<String, Object> input = new HashMap<String, Object>();
         input.put("param1", "error");
+        MapOutputContext output = new MapOutputContext();
 
-        assertThatThrownBy(() -> toolProvider.execute(input))
+        assertThatThrownBy(() -> toolProvider.execute(input, output))
                 .isInstanceOf(ToolExecutionException.class)
                 .hasMessageContaining("test_tool")
                 .hasMessageContaining("Simulated error");
@@ -91,11 +92,12 @@ class ToolProviderTest {
     void executeAsyncShouldExecuteToolAsynchronously() throws Exception {
         Map<String, Object> input = new HashMap<String, Object>();
         input.put("param1", "async_test");
+        MapOutputContext output = new MapOutputContext();
 
-        CompletableFuture<Object> future = toolProvider.executeAsync(input);
-        Object result = future.get();
+        CompletableFuture<Void> future = toolProvider.executeAsync(input, output);
+        future.get();
 
-        assertThat(result).isEqualTo("processed: async_test");
+        assertThat(output.get("result")).isEqualTo("processed: async_test");
     }
 
     @Test
@@ -103,8 +105,9 @@ class ToolProviderTest {
     void executeAsyncShouldCompleteExceptionallyOnExecutionFailure() {
         Map<String, Object> input = new HashMap<String, Object>();
         input.put("param1", "error");
+        MapOutputContext output = new MapOutputContext();
 
-        CompletableFuture<Object> future = toolProvider.executeAsync(input);
+        CompletableFuture<Void> future = toolProvider.executeAsync(input, output);
 
         assertThatThrownBy(() -> future.get())
                 .isInstanceOf(ExecutionException.class)
@@ -152,8 +155,9 @@ class ToolProviderTest {
     void executeAsyncShouldUseForkJoinPool() {
         Map<String, Object> input = new HashMap<String, Object>();
         input.put("param1", "test");
+        MapOutputContext output = new MapOutputContext();
 
-        CompletableFuture<Object> future = toolProvider.executeAsync(input);
+        CompletableFuture<Void> future = toolProvider.executeAsync(input, output);
 
         assertThat(future).isNotNull();
         assertThat(future.isDone()).isTrue(); // 由于测试工具立即完成
@@ -164,8 +168,9 @@ class ToolProviderTest {
     void executeAsyncShouldPropagateExecuteException() {
         Map<String, Object> input = new HashMap<String, Object>();
         input.put("param1", "error");
+        MapOutputContext output = new MapOutputContext();
 
-        CompletableFuture<Object> future = toolProvider.executeAsync(input);
+        CompletableFuture<Void> future = toolProvider.executeAsync(input, output);
 
         // 等待异步完成并验证异常
         assertThatThrownBy(() -> future.join())
@@ -177,18 +182,21 @@ class ToolProviderTest {
     @DisplayName("应该支持空输入")
     void shouldSupportEmptyInput() throws ToolExecutionException {
         Map<String, Object> input = new HashMap<String, Object>();
+        MapOutputContext output = new MapOutputContext();
 
-        Object result = toolProvider.execute(input);
+        toolProvider.execute(input, output);
 
-        assertThat(result).isEqualTo("processed: null");
+        assertThat(output.get("result")).isEqualTo("processed: null");
     }
 
     @Test
     @DisplayName("应该支持null输入")
     void shouldSupportNullInput() throws ToolExecutionException {
-        Object result = toolProvider.execute(null);
+        MapOutputContext output = new MapOutputContext();
 
-        assertThat(result).isEqualTo("processed: null");
+        toolProvider.execute(null, output);
+
+        assertThat(output.get("result")).isEqualTo("processed: null");
     }
 
     @Test
@@ -199,10 +207,25 @@ class ToolProviderTest {
 
         Map<String, Object> input = new HashMap<String, Object>();
         input.put("param1", complexObject);
+        MapOutputContext output = new MapOutputContext();
 
-        Object result = toolProvider.execute(input);
+        toolProvider.execute(input, output);
 
-        assertThat(result).isNotNull();
+        assertThat(output.get("result")).isNotNull();
+    }
+
+    // 简单的 ToolOutputContext 实现用于测试
+    private static class MapOutputContext implements ToolOutputContext {
+        private final Map<String, Object> data = new HashMap<String, Object>();
+
+        @Override
+        public void put(String key, Object value) {
+            data.put(key, value);
+        }
+
+        public Object get(String key) {
+            return data.get(key);
+        }
     }
 
     // 测试用的实现类
@@ -233,14 +256,14 @@ class ToolProviderTest {
         }
 
         @Override
-        public Object execute(Map<String, Object> input) throws ToolExecutionException {
+        public void execute(Map<String, Object> input, ToolOutputContext output) throws ToolExecutionException {
             Object param1 = input != null ? input.get("param1") : null;
 
             if (param1 != null && param1.toString().equals("error")) {
                 throw new ToolExecutionException(getName(), "Simulated error");
             }
 
-            return "processed: " + (param1 != null ? param1 : "null");
+            output.put("result", "processed: " + (param1 != null ? param1 : "null"));
         }
     }
 
@@ -268,8 +291,8 @@ class ToolProviderTest {
         }
 
         @Override
-        public Object execute(Map<String, Object> input) throws ToolExecutionException {
-            return "executed";
+        public void execute(Map<String, Object> input, ToolOutputContext output) throws ToolExecutionException {
+            output.put("result", "executed");
         }
 
         @Override
