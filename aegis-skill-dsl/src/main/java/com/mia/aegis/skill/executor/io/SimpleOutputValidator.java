@@ -134,7 +134,11 @@ public class SimpleOutputValidator implements OutputValidator {
 
             case "object":
             case "map":
-                return value instanceof Map;
+                // object 向下兼容：允许接收 string/number/boolean 等简单类型
+                return value instanceof Map
+                    || value instanceof String
+                    || value instanceof Number
+                    || value instanceof Boolean;
 
             case "array":
             case "list":
