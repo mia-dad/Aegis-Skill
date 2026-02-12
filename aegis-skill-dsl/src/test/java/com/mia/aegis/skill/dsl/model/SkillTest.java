@@ -33,6 +33,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "test_skill",
+                "1.0.0",
                 "测试技能描述",
                 intents,
                 inputSchema,
@@ -42,6 +43,7 @@ class SkillTest {
         );
 
         assertThat(skill.getId()).isEqualTo("test_skill");
+        assertThat(skill.getVersion()).isEqualTo("1.0.0");
         assertThat(skill.getDescription()).isEqualTo("测试技能描述");
         assertThat(skill.getIntents()).containsExactly("test", "example");
         assertThat(skill.getSteps()).hasSize(2);
@@ -55,6 +57,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "  test_skill  ",
+                "1.0.0",
                 null,
                 null,
                 null,
@@ -71,15 +74,15 @@ class SkillTest {
     void shouldRejectNullOrEmptySkillId() {
         List<Step> steps = createTestSteps();
 
-        assertThatThrownBy(() -> new Skill(null, null, null, null, steps, null, null))
+        assertThatThrownBy(() -> new Skill(null, null, null, null, null, steps, null, null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("技能ID不能为空");
 
-        assertThatThrownBy(() -> new Skill("", null, null, null, steps, null, null))
+        assertThatThrownBy(() -> new Skill("", null, null, null, null, steps, null, null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("技能ID不能为空");
 
-        assertThatThrownBy(() -> new Skill("   ", null, null, null, steps, null, null))
+        assertThatThrownBy(() -> new Skill("   ", null, null, null, null, steps, null, null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("技能ID不能为空");
     }
@@ -87,11 +90,11 @@ class SkillTest {
     @Test
     @DisplayName("应该拒绝null或空的Step列表")
     void shouldRejectNullOrEmptyStepList() {
-        assertThatThrownBy(() -> new Skill("test_skill", null, null, null, null, null, null))
+        assertThatThrownBy(() -> new Skill("test_skill", "1.0.0", null, null, null, null, null, null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("技能必须包含至少一个步骤");
 
-        assertThatThrownBy(() -> new Skill("test_skill", null, null, null, new ArrayList<Step>(), null, null))
+        assertThatThrownBy(() -> new Skill("test_skill", "1.0.0", null, null, null, new ArrayList<Step>(), null, null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("技能必须包含至少一个步骤");
     }
@@ -103,6 +106,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "test_skill",
+                "1.0.0",
                 null,
                 null,
                 null,
@@ -122,6 +126,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "test_skill",
+                "1.0.0",
                 null,
                 null,
                 null,
@@ -141,6 +146,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "test_skill",
+                "1.0.0",
                 null,
                 null,
                 null,
@@ -160,6 +166,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "test_skill",
+                "1.0.0",
                 null,
                 null,
                 null,
@@ -181,6 +188,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "test_skill",
+                "1.0.0",
                 null,
                 intents,
                 null,
@@ -200,6 +208,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "test_skill",
+                "1.0.0",
                 null,
                 null,
                 null,
@@ -221,6 +230,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "test_skill",
+                "1.0.0",
                 null,
                 null,
                 null,
@@ -244,6 +254,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "test_skill",
+                "1.0.0",
                 "description",
                 intents,
                 null,
@@ -270,6 +281,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "test_skill",
+                "1.0.0",
                 null,
                 null,
                 null,
@@ -291,6 +303,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "test_skill",
+                "1.0.0",
                 null,
                 null,
                 null,
@@ -312,6 +325,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "test_skill",
+                "1.0.0",
                 null,
                 null,
                 null,
@@ -334,6 +348,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "test_skill",
+                "1.0.0",
                 null,
                 null,
                 null,
@@ -354,6 +369,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "test_skill",
+                "1.0.0",
                 "description",
                 intents,
                 null,
@@ -363,6 +379,7 @@ class SkillTest {
         );
 
         assertThat(skill.toString()).contains("test_skill");
+        assertThat(skill.toString()).contains("1.0.0");
         assertThat(skill.toString()).contains("2");
         assertThat(skill.toString()).contains("test");
         assertThat(skill.toString()).contains("example");
@@ -376,6 +393,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "test_skill",
+                "1.0.0",
                 null,
                 intents,
                 null,
@@ -398,6 +416,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "test_skill",
+                "1.0.0",
                 null,
                 null,
                 null,
@@ -418,6 +437,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "test_skill",
+                "1.0.0",
                 multiLineDescription,
                 null,
                 null,
@@ -439,8 +459,8 @@ class SkillTest {
                 createMockStep("step3")
         );
 
-        Skill skill1 = new Skill("skill1", null, null, null, singleStep, null, null);
-        Skill skill2 = new Skill("skill2", null, null, null, threeSteps, null, null);
+        Skill skill1 = new Skill("skill1", "1.0.0", null, null, null, singleStep, null, null);
+        Skill skill2 = new Skill("skill2", "1.0.0", null, null, null, threeSteps, null, null);
 
         assertThat(skill1.getStepCount()).isEqualTo(1);
         assertThat(skill2.getStepCount()).isEqualTo(3);
@@ -453,6 +473,7 @@ class SkillTest {
 
         Skill skill = new Skill(
                 "test_skill_123",
+                "1.0.0",
                 null,
                 null,
                 null,
@@ -467,7 +488,7 @@ class SkillTest {
     // Helper methods
 
     private List<Step> createTestSteps() {
-        Map<String, String> inputTemplate = new HashMap<String, String>();
+        Map<String, Object> inputTemplate = new HashMap<String, Object>();
         inputTemplate.put("param", "value");
 
         Step step1 = Step.tool("step1", new ToolStepConfig("tool1", inputTemplate));
@@ -480,7 +501,7 @@ class SkillTest {
     }
 
     private Step createMockStep(String name) {
-        return Step.tool(name, new ToolStepConfig("tool", new HashMap<String, String>()));
+        return Step.tool(name, new ToolStepConfig("tool", new HashMap<String, Object>()));
     }
 
     private InputSchema createTestInputSchema() {

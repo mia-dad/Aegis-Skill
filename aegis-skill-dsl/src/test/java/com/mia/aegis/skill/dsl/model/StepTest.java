@@ -29,7 +29,7 @@ class StepTest {
     @Test
     @DisplayName("应该成功创建Tool类型的Step")
     void shouldCreateToolStepSuccessfully() {
-        Map<String, String> inputTemplate = new HashMap<String, String>();
+        Map<String, Object> inputTemplate = new HashMap<String, Object>();
         inputTemplate.put("param1", "value1");
         ToolStepConfig config = new ToolStepConfig("test_tool", inputTemplate);
 
@@ -39,7 +39,6 @@ class StepTest {
         assertThat(step.getType()).isEqualTo(StepType.TOOL);
         assertThat(step.isTool()).isTrue();
         assertThat(step.isPrompt()).isFalse();
-        assertThat(step.isCompose()).isFalse();
     }
 
     @Test
@@ -53,27 +52,12 @@ class StepTest {
         assertThat(step.getType()).isEqualTo(StepType.PROMPT);
         assertThat(step.isPrompt()).isTrue();
         assertThat(step.isTool()).isFalse();
-        assertThat(step.isCompose()).isFalse();
-    }
-
-    @Test
-    @DisplayName("应该成功创建Compose类型的Step")
-    void shouldCreateComposeStepSuccessfully() {
-        ComposeStepConfig config = new ComposeStepConfig(java.util.Arrays.asList("step1.output"));
-
-        Step step = Step.compose("test_step", config);
-
-        assertThat(step.getName()).isEqualTo("test_step");
-        assertThat(step.getType()).isEqualTo(StepType.COMPOSE);
-        assertThat(step.isCompose()).isTrue();
-        assertThat(step.isTool()).isFalse();
-        assertThat(step.isPrompt()).isFalse();
     }
 
     @Test
     @DisplayName("Step名称前后空格应该被修剪")
     void shouldTrimStepName() {
-        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, String>());
+        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, Object>());
 
         Step step = new Step("  test_step  ", StepType.TOOL, config);
 
@@ -85,7 +69,7 @@ class StepTest {
     @ValueSource(strings = {"   ", "\t", "\n"})
     @DisplayName("应该拒绝null或空的Step名称")
     void shouldRejectNullOrEmptyStepName(String name) {
-        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, String>());
+        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, Object>());
 
         assertThatThrownBy(() -> new Step(name, StepType.TOOL, config))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -95,7 +79,7 @@ class StepTest {
     @Test
     @DisplayName("应该拒绝null的StepType")
     void shouldRejectNullStepType() {
-        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, String>());
+        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, Object>());
 
         assertThatThrownBy(() -> new Step("test_step", null, config))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -113,7 +97,7 @@ class StepTest {
     @Test
     @DisplayName("应该拒绝类型不匹配的配置")
     void shouldRejectMismatchedConfigType() {
-        ToolStepConfig toolConfig = new ToolStepConfig("tool", new HashMap<String, String>());
+        ToolStepConfig toolConfig = new ToolStepConfig("tool", new HashMap<String, Object>());
 
         assertThatThrownBy(() -> new Step("test_step", StepType.PROMPT, toolConfig))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -125,7 +109,7 @@ class StepTest {
     @Test
     @DisplayName("初始状态应该是PENDING")
     void initialStatusShouldBePending() {
-        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, String>());
+        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, Object>());
         Step step = new Step("test_step", StepType.TOOL, config);
 
         assertThat(step.getStatus()).isEqualTo(StepStatus.PENDING);
@@ -134,7 +118,7 @@ class StepTest {
     @Test
     @DisplayName("应该能够设置和获取状态")
     void shouldSetAndGetStatus() {
-        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, String>());
+        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, Object>());
         Step step = new Step("test_step", StepType.TOOL, config);
 
         step.setStatus(StepStatus.RUNNING);
@@ -150,7 +134,7 @@ class StepTest {
     @Test
     @DisplayName("初始输出应该是null")
     void initialOutputShouldBeNull() {
-        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, String>());
+        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, Object>());
         Step step = new Step("test_step", StepType.TOOL, config);
 
         assertThat(step.getOutput()).isNull();
@@ -159,7 +143,7 @@ class StepTest {
     @Test
     @DisplayName("应该能够设置和获取输出")
     void shouldSetAndGetOutput() {
-        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, String>());
+        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, Object>());
         Step step = new Step("test_step", StepType.TOOL, config);
 
         Object output = "test output";
@@ -171,7 +155,7 @@ class StepTest {
     @Test
     @DisplayName("应该能够设置null输出")
     void shouldAllowSettingNullOutput() {
-        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, String>());
+        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, Object>());
         Step step = new Step("test_step", StepType.TOOL, config);
 
         step.setOutput("test output");
@@ -183,7 +167,7 @@ class StepTest {
     @Test
     @DisplayName("getToolConfig应该返回Tool配置")
     void getToolConfigShouldReturnToolConfig() {
-        ToolStepConfig config = new ToolStepConfig("test_tool", new HashMap<String, String>());
+        ToolStepConfig config = new ToolStepConfig("test_tool", new HashMap<String, Object>());
         Step step = new Step("test_step", StepType.TOOL, config);
 
         assertThat(step.getToolConfig()).isSameAs(config);
@@ -213,7 +197,7 @@ class StepTest {
     @Test
     @DisplayName("非Prompt类型Step调用getPromptConfig应该抛出异常")
     void getPromptConfigOnNonPromptStepShouldThrowException() {
-        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, String>());
+        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, Object>());
         Step step = new Step("test_step", StepType.TOOL, config);
 
         assertThatThrownBy(() -> step.getPromptConfig())
@@ -223,30 +207,9 @@ class StepTest {
     }
 
     @Test
-    @DisplayName("getComposeConfig应该返回Compose配置")
-    void getComposeConfigShouldReturnComposeConfig() {
-        ComposeStepConfig config = new ComposeStepConfig(java.util.Arrays.asList("step1.output"));
-        Step step = new Step("test_step", StepType.COMPOSE, config);
-
-        assertThat(step.getComposeConfig()).isSameAs(config);
-    }
-
-    @Test
-    @DisplayName("非Compose类型Step调用getComposeConfig应该抛出异常")
-    void getComposeConfigOnNonComposeStepShouldThrowException() {
-        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, String>());
-        Step step = new Step("test_step", StepType.TOOL, config);
-
-        assertThatThrownBy(() -> step.getComposeConfig())
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("Step is not a COMPOSE type")
-                .hasMessageContaining(StepType.TOOL.toString());
-    }
-
-    @Test
     @DisplayName("getConfig应该返回配置")
     void getConfigShouldReturnConfig() {
-        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, String>());
+        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, Object>());
         Step step = new Step("test_step", StepType.TOOL, config);
 
         assertThat(step.getConfig()).isSameAs(config);
@@ -255,7 +218,7 @@ class StepTest {
     @Test
     @DisplayName("toString应该包含名称、类型和状态信息")
     void toStringShouldContainNameTypeAndStatus() {
-        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, String>());
+        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, Object>());
         Step step = new Step("test_step", StepType.TOOL, config);
 
         assertThat(step.toString()).contains("test_step");
@@ -266,7 +229,7 @@ class StepTest {
     @Test
     @DisplayName("toString应该反映当前状态")
     void toStringShouldReflectCurrentStatus() {
-        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, String>());
+        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, Object>());
         Step step = new Step("test_step", StepType.TOOL, config);
 
         step.setStatus(StepStatus.SUCCESS);
@@ -277,7 +240,7 @@ class StepTest {
     @Test
     @DisplayName("应该支持所有类型的StepStatus")
     void shouldSupportAllStepStatusTypes() {
-        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, String>());
+        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, Object>());
         Step step = new Step("test_step", StepType.TOOL, config);
 
         for (StepStatus status : StepStatus.values()) {
@@ -289,7 +252,7 @@ class StepTest {
     @Test
     @DisplayName("工厂方法tool应该正确创建Step")
     void factoryMethodToolShouldCreateStepCorrectly() {
-        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, String>());
+        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, Object>());
         Step step = Step.tool("my_step", config);
 
         assertThat(step.getName()).isEqualTo("my_step");
@@ -309,20 +272,20 @@ class StepTest {
     }
 
     @Test
-    @DisplayName("工厂方法compose应该正确创建Step")
-    void factoryMethodComposeShouldCreateStepCorrectly() {
-        ComposeStepConfig config = new ComposeStepConfig(java.util.Arrays.asList("step1"));
-        Step step = Step.compose("my_step", config);
+    @DisplayName("工厂方法template应该正确创建Step")
+    void factoryMethodTemplateShouldCreateStepCorrectly() {
+        TemplateStepConfig config = new TemplateStepConfig("订单编号：{{order_id}}");
+        Step step = Step.template("my_step", config);
 
         assertThat(step.getName()).isEqualTo("my_step");
-        assertThat(step.getType()).isEqualTo(StepType.COMPOSE);
+        assertThat(step.getType()).isEqualTo(StepType.TEMPLATE);
         assertThat(step.getConfig()).isSameAs(config);
     }
 
     @Test
     @DisplayName("应该能够设置复杂的输出对象")
     void shouldHandleComplexOutputObject() {
-        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, String>());
+        ToolStepConfig config = new ToolStepConfig("tool", new HashMap<String, Object>());
         Step step = new Step("test_step", StepType.TOOL, config);
 
         Map<String, Object> complexOutput = new HashMap<String, Object>();

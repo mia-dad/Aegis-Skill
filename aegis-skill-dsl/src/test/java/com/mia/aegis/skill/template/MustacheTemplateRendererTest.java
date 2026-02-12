@@ -121,7 +121,7 @@ class MustacheTemplateRendererTest {
     @DisplayName("应该使用ExecutionContext渲染模板")
     void shouldRenderTemplateWithExecutionContext() {
         MustacheTemplateRenderer renderer = new MustacheTemplateRenderer();
-        String template = "Input: {{query}}, Step output: {{step1.output}}";
+        String template = "Input: {{query}}, Step output: {{step1.value}}";
 
         Map<String, Object> input = new HashMap<String, Object>();
         input.put("query", "test query");
@@ -272,7 +272,7 @@ class MustacheTemplateRendererTest {
     void shouldRenderInputTemplateMap() {
         MustacheTemplateRenderer renderer = new MustacheTemplateRenderer();
 
-        Map<String, String> inputTemplate = new HashMap<String, String>();
+        Map<String, Object> inputTemplate = new HashMap<String, Object>();
         inputTemplate.put("param1", "{{value1}}");
         inputTemplate.put("param2", "{{value2}}");
 
@@ -292,7 +292,7 @@ class MustacheTemplateRendererTest {
     void renderInputTemplateShouldUseExecutionContext() {
         MustacheTemplateRenderer renderer = new MustacheTemplateRenderer();
 
-        Map<String, String> inputTemplate = new HashMap<String, String>();
+        Map<String, Object> inputTemplate = new HashMap<String, Object>();
         inputTemplate.put("query", "{{input}}");
 
         Map<String, Object> input = new HashMap<String, Object>();

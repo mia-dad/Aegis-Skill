@@ -1,5 +1,7 @@
 package com.mia.aegis.skill.exception;
 
+import com.mia.aegis.skill.i18n.MessageUtil;
+
 /**
  * LLM 调用异常。
  *
@@ -16,7 +18,7 @@ public class LLMInvocationException extends RuntimeException {
      * @param message 错误信息
      */
     public LLMInvocationException(String adapterName, String message) {
-        super("大模型 '" + adapterName + "' 执行失败: " + message);
+        super(MessageUtil.getMessage("llm.execution.error", adapterName, message));
         this.adapterName = adapterName;
     }
 
@@ -28,7 +30,7 @@ public class LLMInvocationException extends RuntimeException {
      * @param cause 原始异常
      */
     public LLMInvocationException(String adapterName, String message, Throwable cause) {
-        super("大模型 '" + adapterName + "' 执行失败: " + message, cause);
+        super(MessageUtil.getMessage("llm.execution.error", adapterName, message), cause);
         this.adapterName = adapterName;
     }
 

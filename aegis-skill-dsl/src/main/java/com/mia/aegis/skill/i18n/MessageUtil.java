@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  */
 public final class MessageUtil {
 
-    private static final String BUNDLE_NAME = "messages";
+    private static final String BUNDLE_NAME = "i18n.messages";
     private static Locale currentLocale = Locale.SIMPLIFIED_CHINESE; // 默认中文
     private static ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_NAME, currentLocale);
 

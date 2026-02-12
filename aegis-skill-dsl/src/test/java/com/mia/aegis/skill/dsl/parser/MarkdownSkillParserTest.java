@@ -35,6 +35,10 @@ class MarkdownSkillParserTest {
     void shouldParseCompleteSkillFileSuccessfully() throws Exception {
         String content = "# skill: test_skill\n" +
                 "\n" +
+                "## version\n" +
+                "\n" +
+                "1.0.0\n" +
+                "\n" +
                 "## description\n" +
                 "\n" +
                 "这是一个测试技能。\n" +
@@ -44,7 +48,7 @@ class MarkdownSkillParserTest {
                 "- 测试\n" +
                 "- 示例\n" +
                 "\n" +
-                "## input\n" +
+                "## input_schema\n" +
                 "\n" +
                 "```yaml\n" +
                 "query: string\n" +
@@ -61,7 +65,7 @@ class MarkdownSkillParserTest {
                 "q: \"{{query}}\"\n" +
                 "```\n" +
                 "\n" +
-                "## output\n" +
+                "## output_schema\n" +
                 "\n" +
                 "```json\n" +
                 "{\n" +
@@ -72,6 +76,7 @@ class MarkdownSkillParserTest {
         Skill skill = parser.parse(content);
 
         assertThat(skill.getId()).isEqualTo("test_skill");
+        assertThat(skill.getVersion()).isEqualTo("1.0.0");
         assertThat(skill.getDescription()).isEqualTo("这是一个测试技能。");
         assertThat(skill.getIntents()).containsExactly("测试", "示例");
         assertThat(skill.getSteps()).hasSize(1);
@@ -111,11 +116,11 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该拒绝缺少skill header的文件")
     void shouldRejectFileWithoutSkillHeader() {
-        String content = "## description\n\n测试描述\n\n## steps\n\n### step: test\n";
+        String content = "## description\n\n测试描述\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\n这是一个测试提示词\n```\n";
 
         assertThatThrownBy(() -> parser.parse(content))
                 .isInstanceOf(SkillParseException.class)
-                .hasMessageContaining("技能内容必须有");
+                .hasMessageContaining("缺少必需的技能 id");
     }
 
     @Test
@@ -140,17 +145,17 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该拒绝没有steps的技能")
     void shouldRejectSkillWithoutSteps() {
-        String content = "# skill: test_skill\n\n## description\n\n测试描述\n";
+        String content = "# skill: test_skill\n\n## version\n\n1.0.0\n\n## description\n\n测试描述\n";
 
         assertThatThrownBy(() -> parser.parse(content))
                 .isInstanceOf(SkillParseException.class)
-                .hasMessageContaining("技能至少需要");
+                .hasMessageContaining("技能至少需要一个");
     }
 
     @Test
     @DisplayName("应该解析Tool类型的步骤")
     void shouldParseToolStep() throws Exception {
-        String content = "# skill: test\n\n## steps\n\n### step: tool_step\n\n**type**: tool\n**tool**: test_tool\n\n```yaml\nparam: value\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## steps\n\n### step: tool_step\n\n**type**: tool\n**tool**: test_tool\n\n```yaml\nparam: value\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -164,7 +169,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该解析Prompt类型的步骤")
     void shouldParsePromptStep() throws Exception {
-        String content = "# skill: test\n\n## steps\n\n### step: prompt_step\n\n**type**: prompt\n\n```prompt\n这是一个提示词模板\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## steps\n\n### step: prompt_step\n\n**type**: prompt\n\n```prompt\n这是一个提示词模板\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -178,7 +183,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该推断Tool步骤类型（当type属性缺失时）")
     void shouldInferToolStepTypeWhenTypeMissing() throws Exception {
-        String content = "# skill: test\n\n## steps\n\n### step: tool_step\n\n**tool**: test_tool\n\n```yaml\nparam: value\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## steps\n\n### step: tool_step\n\n**tool**: test_tool\n\n```yaml\nparam: value\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -188,7 +193,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该推断Prompt步骤类型（当type属性缺失但有prompt块时）")
     void shouldInferPromptStepTypeWhenTypeMissing() throws Exception {
-        String content = "# skill: test\n\n## steps\n\n### step: prompt_step\n\n```prompt\n提示词内容\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## steps\n\n### step: prompt_step\n\n```prompt\n提示词内容\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -198,11 +203,11 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该解析包含Mustache变量的输入模板")
     void shouldParseInputTemplateWithMustacheVariables() throws Exception {
-        String content = "# skill: test\n\n## steps\n\n### step: tool_step\n\n**type**: tool\n**tool**: test_tool\n\n```yaml\nparam1: \"{{var1}}\"\nparam2: \"{{step2.output}}\"\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## steps\n\n### step: tool_step\n\n**type**: tool\n**tool**: test_tool\n\n```yaml\nparam1: \"{{var1}}\"\nparam2: \"{{step2.output}}\"\n```\n";
 
         Skill skill = parser.parse(content);
 
-        Map<String, String> inputTemplate = skill.getSteps().get(0).getToolConfig().getInputTemplate();
+        Map<String, Object> inputTemplate = skill.getSteps().get(0).getToolConfig().getInputTemplate();
         assertThat(inputTemplate.get("param1")).isEqualTo("{{var1}}");
         assertThat(inputTemplate.get("param2")).isEqualTo("{{step2.output}}");
     }
@@ -210,7 +215,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该解析intent列表")
     void shouldParseIntentList() throws Exception {
-        String content = "# skill: test\n\n## intent\n\n- 意图1\n- 意图2\n- 意图3\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntest\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## intent\n\n- 意图1\n- 意图2\n- 意图3\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntest\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -220,7 +225,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该解析input schema")
     void shouldParseInputSchema() throws Exception {
-        String content = "# skill: test\n\n## input\n\n```yaml\nparam1: string\nparam2: number\n```\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntest\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## input_schema\n\n```yaml\nparam1: string\nparam2: number\n```\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntest\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -231,7 +236,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该解析output contract")
     void shouldParseOutputContract() throws Exception {
-        String content = "# skill: test\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntest\n```\n\n## output\n\n```json\n{\n  \"result\": \"string\"\n}\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntest\n```\n\n## output_schema\n\n```json\n{\n  \"result\": \"string\"\n}\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -241,7 +246,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该解析多行description")
     void shouldParseMultiLineDescription() throws Exception {
-        String content = "# skill: test\n\n## description\n\n第一行描述\n第二行描述\n第三行描述\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntest\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## description\n\n第一行描述\n第二行描述\n第三行描述\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntest\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -253,7 +258,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该解析多个步骤")
     void shouldParseMultipleSteps() throws Exception {
-        String content = "# skill: test\n\n## steps\n\n### step: step1\n\n**type**: tool\n**tool**: tool1\n\n```yaml\nparam: value\n```\n\n### step: step2\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n\n### step: step3\n\n**type**: tool\n**tool**: tool3\n\n```yaml\nq: test\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## steps\n\n### step: step1\n\n**type**: tool\n**tool**: tool1\n\n```yaml\nparam: value\n```\n\n### step: step2\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n\n### step: step3\n\n**type**: tool\n**tool**: tool3\n\n```yaml\nq: test\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -266,7 +271,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该处理大小写不敏感的step header")
     void shouldHandleCaseInsensitiveStepHeader() throws Exception {
-        String content = "# skill: test\n\n## steps\n\n### STEP: test_step\n\n**type**: tool\n**tool**: test_tool\n\n```yaml\nparam: value\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## steps\n\n### STEP: test_step\n\n**type**: tool\n**tool**: test_tool\n\n```yaml\nparam: value\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -276,7 +281,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该处理大小写不敏感的skill header")
     void shouldHandleCaseInsensitiveSkillHeader() throws Exception {
-        String content = "# SKILL: test_skill\n\n## steps\n\n### step: test\n\n**type**: tool\n**tool**: test_tool\n\n```yaml\nparam: value\n```\n";
+        String content = "# SKILL: test_skill\n\n## version\n\n1.0.0\n\n## steps\n\n### step: test\n\n**type**: tool\n**tool**: test_tool\n\n```yaml\nparam: value\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -286,7 +291,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该拒绝Tool步骤缺少tool属性")
     void shouldRejectToolStepWithoutToolAttribute() {
-        String content = "# skill: test\n\n## steps\n\n### step: tool_step\n\n**type**: tool\n\n```yaml\nparam: value\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## steps\n\n### step: tool_step\n\n**type**: tool\n\n```yaml\nparam: value\n```\n";
 
         assertThatThrownBy(() -> parser.parse(content))
                 .isInstanceOf(SkillParseException.class)
@@ -297,7 +302,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该拒绝Prompt步骤缺少prompt模板")
     void shouldRejectPromptStepWithoutTemplate() {
-        String content = "# skill: test\n\n## steps\n\n### step: prompt_step\n\n**type**: prompt\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## steps\n\n### step: prompt_step\n\n**type**: prompt\n";
 
         assertThatThrownBy(() -> parser.parse(content))
                 .isInstanceOf(SkillParseException.class)
@@ -308,7 +313,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("isValid应该验证有效的技能文件")
     void isValidShouldValidateValidSkillFile() {
-        String content = "# skill: test\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
 
         assertThat(parser.isValid(content)).isTrue();
     }
@@ -331,7 +336,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该解析包含扩展字段的技能")
     void shouldParseSkillWithExtensionFields() throws Exception {
-        String content = "# skill: test\n\n## x-aegis-version\n\n1.0.0\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## x-aegis-version\n\n1.0.0\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -343,7 +348,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该处理没有description的技能")
     void shouldHandleSkillWithoutDescription() throws Exception {
-        String content = "# skill: test\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -353,7 +358,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该处理没有intent的技能")
     void shouldHandleSkillWithoutIntent() throws Exception {
-        String content = "# skill: test\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -363,7 +368,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该处理没有input的技能")
     void shouldHandleSkillWithoutInput() throws Exception {
-        String content = "# skill: test\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -373,7 +378,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该处理没有output的技能")
     void shouldHandleSkillWithoutOutput() throws Exception {
-        String content = "# skill: test\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -383,7 +388,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该解析JSON格式的input")
     void shouldParseJsonFormatInput() throws Exception {
-        String content = "# skill: test\n\n## input\n\n```json\n{\n  \"param1\": \"string\"\n}\n```\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## input_schema\n\n```json\n{\n  \"param1\": \"string\"\n}\n```\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -393,7 +398,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该拒绝语法错误的YAML")
     void shouldRejectMalformedYaml() {
-        String content = "# skill: test\n\n## input\n\n```yaml\nparam1: string\n  invalid indentation\n```\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## input_schema\n\n```yaml\nparam1: string\n  invalid indentation\n```\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
 
         // 解析器应该尽力解析，但可能会遇到问题
         // 这里我们测试解析器不会崩溃
@@ -409,7 +414,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该处理空的input schema")
     void shouldHandleEmptyInputSchema() throws Exception {
-        String content = "# skill: test\n\n## input\n\n```yaml\n```\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## input_schema\n\n```yaml\n```\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -419,7 +424,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该解析复杂类型的input schema")
     void shouldParseComplexInputSchema() throws Exception {
-        String content = "# skill: test\n\n## input\n\n```yaml\nparam1:\n  type: string\n  required: true\n  description: 参数描述\nparam2: string\n```\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## input_schema\n\n```yaml\nparam1:\n  type: string\n  required: true\n  description: 参数描述\nparam2: string\n```\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -445,7 +450,7 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该解析包含特殊字符的step名称")
     void shouldParseStepNameWithSpecialCharacters() throws Exception {
-        String content = "# skill: test\n\n## steps\n\n### step: test_step_123\n\n**type**: tool\n**tool**: test_tool\n\n```yaml\nparam: value\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## steps\n\n### step: test_step_123\n\n**type**: tool\n**tool**: test_tool\n\n```yaml\nparam: value\n```\n";
 
         Skill skill = parser.parse(content);
 
@@ -455,10 +460,40 @@ class MarkdownSkillParserTest {
     @Test
     @DisplayName("应该处理步骤属性的多行格式")
     void shouldHandleMultiLineStepAttributes() throws Exception {
-        String content = "# skill: test\n\n## steps\n\n### step: test\n\n**type**: tool\n**tool**: test_tool\n\n```yaml\nparam: value\n```\n";
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## steps\n\n### step: test\n\n**type**: tool\n**tool**: test_tool\n\n```yaml\nparam: value\n```\n";
 
         Skill skill = parser.parse(content);
 
         assertThat(skill.getSteps().get(0).getToolConfig().getToolName()).isEqualTo("test_tool");
+    }
+
+    @Test
+    @DisplayName("缺少version应该抛出异常")
+    void shouldRejectSkillWithoutVersion() {
+        String content = "# skill: test\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
+
+        assertThatThrownBy(() -> parser.parse(content))
+                .isInstanceOf(SkillParseException.class)
+                .hasMessageContaining("缺少必需的 version");
+    }
+
+    @Test
+    @DisplayName("应该从frontmatter解析version")
+    void shouldParseVersionFromFrontmatter() throws Exception {
+        String content = "---\nid: test\nversion: 2.1.0\n---\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
+
+        Skill skill = parser.parse(content);
+
+        assertThat(skill.getVersion()).isEqualTo("2.1.0");
+    }
+
+    @Test
+    @DisplayName("应该从version section解析version")
+    void shouldParseVersionFromSection() throws Exception {
+        String content = "# skill: test\n\n## version\n\n3.0.1\n\n## steps\n\n### step: test\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n";
+
+        Skill skill = parser.parse(content);
+
+        assertThat(skill.getVersion()).isEqualTo("3.0.1");
     }
 }

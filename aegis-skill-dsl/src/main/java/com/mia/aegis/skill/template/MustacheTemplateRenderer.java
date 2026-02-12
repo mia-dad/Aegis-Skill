@@ -16,16 +16,9 @@ import java.util.regex.Pattern;
 /**
  * 基于 JMustache 的模板渲染器实现。
  *
- * <p>支持 Mustache 语法的模板渲染，包括：</p>
- * <ul>
- *   <li>{@code {{variable}}} - 简单变量替换（不转义）</li>
- *   <li>{@code {{step.output}}} - 嵌套属性访问</li>
- *   <li>{@code {{#section}}...{{/section}}} - 条件/循环块</li>
- * </ul>
- *
- * <p><b>注意：</b>本渲染器默认不进行HTML转义，所有变量输出都保持原始格式。
- * 如需HTML转义，请在模板中使用标准Mustache语法或手动处理。</p>
+ * @deprecated 请使用 {@link AegisTemplateRenderer} 代替。此类保留以兼容旧代码，后续版本将移除。
  */
+@Deprecated
 public class MustacheTemplateRenderer implements TemplateRenderer {
 
     private static final Pattern VARIABLE_PATTERN = Pattern.compile("\\{\\{([^{}#/]+?)\\}\\}");
@@ -48,6 +41,7 @@ public class MustacheTemplateRenderer implements TemplateRenderer {
     public MustacheTemplateRenderer(boolean escapeHtml) {
         this.escapeHtml = escapeHtml;
         this.compiler = Mustache.compiler()
+                .escapeHTML(escapeHtml)
                 .nullValue("")
                 .defaultValue("");
     }
@@ -62,9 +56,11 @@ public class MustacheTemplateRenderer implements TemplateRenderer {
         this.escapeHtml = escapeHtml;
         if (strictMode) {
             this.compiler = Mustache.compiler()
+                    .escapeHTML(escapeHtml)
                     .strictSections(true);
         } else {
             this.compiler = Mustache.compiler()
+                    .escapeHTML(escapeHtml)
                     .nullValue("")
                     .defaultValue("");
         }
@@ -166,23 +162,66 @@ public class MustacheTemplateRenderer implements TemplateRenderer {
     /**
      * 渲染 Map 类型的输入模板。
      *
-     * <p>将 Map 中的每个值作为模板进行渲染。</p>
+     * <p>支持简写格式和扩展格式：</p>
+     * <ul>
+     *   <li>简写格式：Map<String, String> - 每个值作为模板渲染</li>
+     *   <li>扩展格式：Map<String, Object> - 递归处理嵌套对象</li>
+     * </ul>
      *
      * @param inputTemplate 输入模板映射
      * @param context 上下文数据
      * @return 渲染后的参数映射
      * @throws TemplateRenderException 渲染失败时抛出
      */
-    public Map<String, Object> renderInputTemplate(Map<String, String> inputTemplate,
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> renderInputTemplate(Map<String, Object> inputTemplate,
                                                    Map<String, Object> context) throws TemplateRenderException {
         Map<String, Object> result = new java.util.LinkedHashMap<String, Object>();
-        for (Map.Entry<String, String> entry : inputTemplate.entrySet()) {
+        for (Map.Entry<String, Object> entry : inputTemplate.entrySet()) {
             String key = entry.getKey();
-            String template = entry.getValue();
-            String rendered = render(template, context);
-            result.put(key, rendered);
+            Object value = entry.getValue();
+            result.put(key, renderValue(value, context));
         }
         return result;
+    }
+
+    /**
+     * 渲染单个值（支持嵌套对象和数组）。
+     */
+    @SuppressWarnings("unchecked")
+    private Object renderValue(Object value, Map<String, Object> context) throws TemplateRenderException {
+        if (value == null) {
+            return null;
+        }
+
+        // 字符串：作为模板渲染
+        if (value instanceof String) {
+            String template = (String) value;
+            return render(template, context);
+        }
+
+        // Map：递归处理
+        if (value instanceof Map) {
+            Map<String, Object> result = new java.util.LinkedHashMap<String, Object>();
+            Map<String, Object> map = (Map<String, Object>) value;
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                result.put(entry.getKey(), renderValue(entry.getValue(), context));
+            }
+            return result;
+        }
+
+        // List：递归处理
+        if (value instanceof List) {
+            List<Object> result = new java.util.ArrayList<Object>();
+            List<Object> list = (List<Object>) value;
+            for (Object item : list) {
+                result.add(renderValue(item, context));
+            }
+            return result;
+        }
+
+        // 其他类型（Number, Boolean 等）：直接返回
+        return value;
     }
 
     /**
@@ -193,7 +232,7 @@ public class MustacheTemplateRenderer implements TemplateRenderer {
      * @return 渲染后的参数映射
      * @throws TemplateRenderException 渲染失败时抛出
      */
-    public Map<String, Object> renderInputTemplate(Map<String, String> inputTemplate,
+    public Map<String, Object> renderInputTemplate(Map<String, Object> inputTemplate,
                                                    ExecutionContext context) throws TemplateRenderException {
         return renderInputTemplate(inputTemplate, context.buildVariableContext());
     }

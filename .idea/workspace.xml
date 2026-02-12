@@ -5,20 +5,141 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aca41360-ab30-4845-90e7-4b503e090930" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/exception/LLMInvocationException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/llm/LLMAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/llm/LLMAdapterRegistry.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/tools/DefaultToolRegistry.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/resources/messages_en_US.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/resources/messages_zh_CN.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/exception/SkillExceptionTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/exception/SkillExecutionExceptionTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/exception/ToolExecutionExceptionTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/tools/ToolProviderTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/tools/ToolSchemaTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/tools/ValidationResultTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aegis-skill-tools/src/main/java/com/mia/aegis/skill/tools/ToolRegistry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-api/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-api/src/main/java/com/mia/SkillApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-api/src/main/java/com/mia/skill/api/config/SkillConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-api/src/main/java/com/mia/skill/api/controller/LLMController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-api/src/main/java/com/mia/skill/api/controller/SkillController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-api/src/main/java/com/mia/skill/api/dashscope/DashScopeLLMAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-api/src/main/java/com/mia/skill/api/dashscope/package-info.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-api/src/main/java/com/mia/skill/api/dto/AdapterInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-api/src/main/java/com/mia/skill/api/dto/LLMInvokeRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-api/src/main/java/com/mia/skill/api/dto/LLMInvokeResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-api/src/main/java/com/mia/skill/api/dto/SkillExecuteRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-api/src/main/java/com/mia/skill/api/dto/SkillExecuteRequestBySkillID.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-api/src/main/java/com/mia/skill/api/dto/SkillExecuteResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-api/src/main/java/com/mia/skill/api/dto/SkillInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-api/src/main/java/com/mia/skill/api/dto/package-info.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-api/src/main/java/com/mia/skill/api/loader/SkillLoader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-api/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/condition/ConditionEvaluator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/condition/DefaultConditionEvaluator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/condition/ast/BinaryExpression.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/condition/ast/BinaryOperator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/condition/ast/BooleanLiteral.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/condition/ast/NullLiteral.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/condition/ast/StringLiteral.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/condition/ast/VariableReference.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/condition/parser/ConditionExpression.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/condition/parser/ConditionExpressionVisitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/condition/parser/ConditionParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/condition/parser/DefaultConditionParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/AwaitStepConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/FileType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/Reference.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/WhenCondition.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/exception/ConditionParseException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/context/ExecutionIdGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/engine/DefaultSkillExecutor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/engine/ExecutionListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/engine/LoggingExecutionListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/engine/SkillExecutor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/io/OutputValidationResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/io/OutputValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/io/SimpleOutputValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/llm/DefaultLLMAdapterRegistry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/AbstractBuiltinTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/BuiltInTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/GetVariableTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/HttpRequestTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/JsonSelectTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/JsonTransformTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/LogTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/MockFinancialDataTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/ReadFileTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/SetVariableTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/TableAggregateTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/ValidateSchemaTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/WebSearchTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/WriteFileTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/config/BuiltinToolsConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/config/DataSourceConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/config/DataSourceRegistry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/config/DatabaseToolsConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/config/FileAccessConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/config/HttpRequestConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/config/WebSearchConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/db/AbstractDbTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/db/DbInsertTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/db/DbSelectTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/db/DbToolException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/db/DbUpdateTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/db/SqlBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/ComposeStepConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/PromptStepConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/PromptStepConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/Skill.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/Skill.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/Step.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/Step.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/StepStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/StepStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/StepType.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/StepType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/ToolStepConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/ToolStepConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/io/FieldSpec.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/io/FieldSpec.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/io/InputSchema.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/io/InputSchema.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/io/OutputContract.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/model/io/OutputContract.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/parser/MarkdownSkillParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/parser/MarkdownSkillParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/validator/DefaultSkillValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/dsl/validator/DefaultSkillValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/exception/LLMInvocationException.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/exception/LLMInvocationException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/context/ExecutionContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/context/ExecutionContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/context/RuntimeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/context/RuntimeInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/context/SkillResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/context/SkillResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/context/StepResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/context/StepResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/step/ComposeStepExecutor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/step/PromptStepExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/step/PromptStepExecutor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/step/ToolStepExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/executor/step/ToolStepExecutor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/i18n/MessageUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/i18n/MessageUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/llm/LLMAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/llm/LLMAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/template/MustacheTemplateRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/template/MustacheTemplateRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/template/TemplateRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/template/TemplateRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/java/com/mia/aegis/skill/tools/DefaultToolRegistry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/resources/messages_en_US.properties" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/resources/messages_en_US.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/main/resources/messages_zh_CN.properties" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/main/resources/messages_zh_CN.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/dsl/model/ComposeStepConfigTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/dsl/model/SkillTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/dsl/model/SkillTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/dsl/model/StepStatusTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/dsl/model/StepStatusTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/dsl/model/StepTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/dsl/model/StepTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/dsl/model/StepTypeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/dsl/model/StepTypeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/dsl/model/ToolStepConfigTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/dsl/model/ToolStepConfigTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/dsl/model/io/InputSchemaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/dsl/model/io/InputSchemaTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/dsl/parser/MarkdownSkillParserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/dsl/parser/MarkdownSkillParserTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/dsl/validator/DefaultSkillValidatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/dsl/validator/DefaultSkillValidatorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/exception/ExceptionTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/exception/SkillExceptionTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/exception/SkillExecutionExceptionTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/exception/ToolExecutionExceptionTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/executor/context/ExecutionContextTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/template/MustacheTemplateRendererTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/template/MustacheTemplateRendererTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/tools/ToolProviderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/java/com/mia/aegis/skill/tools/ToolProviderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/test/resources/skills/financial_analysis.md" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/resources/skills/financial_analysis.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-dsl/src/test/resources/skills/simple_tool.md" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-dsl/src/test/resources/skills/simple_tool.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-tools/src/main/java/com/mia/aegis/skill/tools/ToolProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-tools/src/main/java/com/mia/aegis/skill/tools/ToolProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aegis-skill-tools/src/main/java/com/mia/aegis/skill/tools/ToolSchema.java" beforeDir="false" afterPath="$PROJECT_DIR$/aegis-skill-tools/src/main/java/com/mia/aegis/skill/tools/ToolSchema.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skill-web/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/skill-web/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skill-web/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/skill-web/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skill-web/components/DynamicForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/skill-web/components/DynamicForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skill-web/components/ResultRenderer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/skill-web/components/ResultRenderer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skill-web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/skill-web/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skill-web/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/skill-web/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skill-web/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/skill-web/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skill-web/services/mockData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/skill-web/services/mockData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skill-web/services/skillService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/skill-web/services/skillService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skill-web/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/skill-web/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skill-web/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/skill-web/vite.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +149,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="package-info" />
+        <option value="Kotlin Class" />
         <option value="Class" />
       </list>
     </option>
@@ -38,9 +161,9 @@
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="396tXdCttZb7y5ojHES3EdaNKcA" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -50,28 +173,74 @@
   "keyToString": {
     "Maven.aegis [clean].executor": "Run",
     "Maven.aegis [compile].executor": "Run",
+    "Maven.aegis [install].executor": "Run",
     "Maven.aegis [package].executor": "Run",
+    "Maven.aegis-builtin-tools [install].executor": "Run",
+    "Maven.aegis-builtin-tools [package].executor": "Run",
+    "Maven.aegis-skill-api [clean].executor": "Run",
+    "Maven.aegis-skill-api [compile].executor": "Run",
+    "Maven.aegis-skill-api [install].executor": "Run",
+    "Maven.aegis-skill-api [package].executor": "Run",
+    "Maven.aegis-skill-demo [compile].executor": "Run",
+    "Maven.aegis-skill-demo [install].executor": "Run",
     "Maven.aegis-skill-dsl [clean].executor": "Run",
     "Maven.aegis-skill-dsl [compile].executor": "Run",
+    "Maven.aegis-skill-dsl [install].executor": "Run",
     "Maven.aegis-skill-dsl [package].executor": "Run",
+    "Maven.aegis-skill-financial [compile].executor": "Run",
+    "Maven.aegis-skill-financial [install].executor": "Run",
+    "Maven.aegis-skill-sales [compile].executor": "Run",
+    "Maven.aegis-skill-sales [install].executor": "Run",
+    "Maven.aegis-skill-search [clean].executor": "Run",
+    "Maven.aegis-skill-search [compile].executor": "Run",
+    "Maven.aegis-skill-search [install].executor": "Run",
+    "Maven.aegis-skill-search [package].executor": "Run",
     "Maven.aegis-skill-tools [compile].executor": "Run",
     "Maven.aegis-skill-tools [install].executor": "Run",
     "Maven.aegis-skill-tools [package].executor": "Run",
+    "Maven.aegis-tools [clean].executor": "Run",
+    "Maven.aegis-tools [compile].executor": "Run",
+    "Maven.aegis-tools [install].executor": "Run",
+    "Maven.aegis-tools [package].executor": "Run",
+    "Maven.aegis-tools [test].executor": "Run",
+    "Maven.aegis-tools [validate].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/works/aegis/aegis-skill-dsl/src/test/java/com/mia/aegis/skill",
+    "last_opened_file_path": "D:/works/aegis/aegis-builtin-tools/src/main/resources",
     "project.structure.last.edited": "模块",
     "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "应用程序.运行skill引擎.executor": "Run"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\works\aegis\aegis-builtin-tools\src\main\resources" />
+      <recent name="D:\works\aegis\aegis-tools\src\main\java\com\mia\aegis\skill\tools" />
+      <recent name="D:\works\aegis\aegis-skill-api\src\main\resources" />
       <recent name="D:\works\aegis\aegis-skill-dsl\src\test\java\com\mia\aegis\skill" />
       <recent name="D:\works\aegis\aegis-skill-dsl\src\test\java\com\mia\aegis\skill\exception" />
-      <recent name="D:\works\aegis\aegis-skill-dsl\src\main\resources" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\works\aegis\aegis-builtin-tools\src\main\resources\skills" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.mia.aegis.skill.exception" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="运行skill引擎" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.mia.SkillApplication" />
+      <module name="aegis-skill-api" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -91,6 +260,46 @@
           <url>file://$PROJECT_DIR$/../Ageis重构/Aegis/aegis-skill-dsl/src/main/java/com/aegis/skill/spi/DefaultToolRegistry.java</url>
           <line>84</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/BuiltInTool.java</url>
+          <line>60</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../Ageis重构/Aegis/aegis-skill-dsl/src/main/java/com/aegis/skill/tools/config/HttpRequestConfig.java</url>
+          <line>276</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../Ageis重构/Aegis/aegis-skill-dsl/src/main/java/com/aegis/skill/tools/config/HttpRequestConfig.java</url>
+          <line>267</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/aegis-tools/src/main/java/com/mia/aegis/skill/tools/MockFinancialDataTool.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/aegis-skill-search/src/main/java/com/mia/aegis/skill/search/WebSearchTool.java</url>
+          <line>173</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/aegis-skill-search/src/main/java/com/mia/aegis/skill/search/WebSearchTool.java</url>
+          <line>170</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/aegis-skill-search/src/main/java/com/mia/aegis/skill/search/WebSearchTool.java</url>
+          <line>165</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/aegis-skill-search/src/main/java/com/mia/aegis/skill/search/WebSearchTool.java</url>
+          <line>162</line>
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

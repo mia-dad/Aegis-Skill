@@ -17,6 +17,9 @@ public class OutputContract {
     private final Map<String, FieldSpec> fields;
     private final OutputFormat format;
 
+    /** 原始字段定义（保留完整嵌套结构，用于 API 元数据输出） */
+    private final Map<String, Object> rawProperties;
+
     /**
      * 创建输出契约。
      *
@@ -24,10 +27,23 @@ public class OutputContract {
      * @param format 输出格式
      */
     public OutputContract(Map<String, FieldSpec> fields, OutputFormat format) {
+        this(fields, format, null);
+    }
+
+    /**
+     * 创建输出契约（含原始字段定义）。
+     *
+     * @param fields 字段映射（用于输出校验）
+     * @param format 输出格式
+     * @param rawProperties 原始 YAML 解析的字段定义（保留完整嵌套结构）
+     */
+    public OutputContract(Map<String, FieldSpec> fields, OutputFormat format,
+                          Map<String, Object> rawProperties) {
         this.fields = fields != null
                 ? Collections.unmodifiableMap(new LinkedHashMap<String, FieldSpec>(fields))
                 : Collections.<String, FieldSpec>emptyMap();
         this.format = format != null ? format : OutputFormat.JSON;
+        this.rawProperties = rawProperties;
     }
 
     /**
@@ -96,6 +112,18 @@ public class OutputContract {
     }
 
     /**
+     * 获取原始字段定义。
+     *
+     * <p>保留 YAML 中定义的完整嵌套结构（如 array 的 items），
+     * 用于 API 元数据输出，避免通过 FieldSpec 转换时丢失信息。</p>
+     *
+     * @return 原始字段定义 Map，未设置时返回 null
+     */
+    public Map<String, Object> getRawProperties() {
+        return rawProperties;
+    }
+
+    /**
      * 检查是否为空契约。
      *
      * @return 是否为空
@@ -106,6 +134,10 @@ public class OutputContract {
 
     @Override
     public String toString() {
-        return "OutputContract{fields=" + fields + ", format=" + format + '}';
+        return "OutputContract{" +
+                "fields=" + fields +
+                ", format=" + format +
+                ", rawProperties=" + (rawProperties != null ? rawProperties.size() + " entries" : "null") +
+                '}';
     }
 }

@@ -5,7 +5,7 @@ package com.mia.aegis.skill.dsl.model;
  * 也是一个技能的生命周期
  * <p>Step 状态转换：</p>
  * <pre>
- * PENDING → RUNNING → SUCCESS | FAILED | SKIPPED
+ * PENDING → RUNNING → SUCCESS | FAILED | SKIPPED | AWAITING
  * </pre>
  */
 public enum StepStatus {
@@ -38,15 +38,21 @@ public enum StepStatus {
      * 被跳过。
      * Step 因策略或条件被跳过执行（v2 预留）。
      */
-    SKIPPED;
+    SKIPPED,
+
+    /**
+     * 等待用户输入。
+     * Step 遇到 await，暂停执行等待用户输入。
+     */
+    AWAITING;
 
     /**
      * 判断是否为终态。
      *
-     * @return 如果状态为 SUCCESS、FAILED 或 SKIPPED 返回 true
+     * @return 如果状态为 SUCCESS、FAILED、SKIPPED 或 AWAITING 返回 true
      */
     public boolean isTerminal() {
-        return this == SUCCESS || this == FAILED || this == SKIPPED;
+        return this == SUCCESS || this == FAILED || this == SKIPPED || this == AWAITING;
     }
 
     /**

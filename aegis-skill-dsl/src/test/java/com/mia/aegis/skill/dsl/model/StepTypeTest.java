@@ -24,8 +24,8 @@ class StepTypeTest {
     @DisplayName("应该包含所有预期的枚举值")
     void shouldContainAllExpectedValues() {
         assertThat(StepType.values())
-                .hasSize(3)
-                .containsExactly(StepType.TOOL, StepType.PROMPT, StepType.COMPOSE);
+                .hasSize(4)
+                .containsExactly(StepType.TOOL, StepType.PROMPT, StepType.AWAIT, StepType.TEMPLATE);
     }
 
     @Test
@@ -45,15 +45,6 @@ class StepTypeTest {
         assertThat(StepType.fromString("PROMPT")).isEqualTo(StepType.PROMPT);
         assertThat(StepType.fromString("Prompt")).isEqualTo(StepType.PROMPT);
         assertThat(StepType.fromString("  prompt  ")).isEqualTo(StepType.PROMPT);
-    }
-
-    @Test
-    @DisplayName("fromString 应该正确解析 COMPOSE（不区分大小写）")
-    void fromString_shouldParseComposeCaseInsensitive() {
-        assertThat(StepType.fromString("compose")).isEqualTo(StepType.COMPOSE);
-        assertThat(StepType.fromString("COMPOSE")).isEqualTo(StepType.COMPOSE);
-        assertThat(StepType.fromString("Compose")).isEqualTo(StepType.COMPOSE);
-        assertThat(StepType.fromString("  compose  ")).isEqualTo(StepType.COMPOSE);
     }
 
     @ParameterizedTest
@@ -81,7 +72,7 @@ class StepTypeTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("未知的技能步骤类型值")
                 .hasMessageContaining(value)
-                .hasMessageContaining("TOOL, PROMPT, COMPOSE");
+                .hasMessageContaining("TOOL, PROMPT, TEMPLATE, AWAIT");
     }
 
     @Test
@@ -89,8 +80,8 @@ class StepTypeTest {
     void fromString_errorMessageShouldListAllSupportedTypes() {
         assertThatThrownBy(() -> StepType.fromString("invalid"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("TOOL")  // 修复：代码中是"TOOL"不是"TOL"
+                .hasMessageContaining("TOOL")
                 .hasMessageContaining("PROMPT")
-                .hasMessageContaining("COMPOSE");
+                .hasMessageContaining("AWAIT");
     }
 }
