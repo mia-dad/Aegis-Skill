@@ -1,0 +1,5 @@
+{
+  "name": "Skill Engine",
+  "description": "A dynamic frontend rendering engine for execution skills, featuring dynamic forms, state management, and rich result visualization.",
+  "requestFramePermissions": []
+}
