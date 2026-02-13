@@ -39,8 +39,7 @@ replay_pid*
 # Windows artifacts
 nul
 
-# skill-web (separate git repo)
-skill-web/
+
 
 # development-plane (独立管理)
 development-plane/
