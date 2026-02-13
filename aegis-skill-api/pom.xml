@@ -41,6 +41,13 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!-- 技能持久化 -->
+        <dependency>
+            <groupId>com.mia</groupId>
+            <artifactId>aegis-skill-persistence</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <!-- 技能包依赖 - 按需引入 -->
         <dependency>
             <groupId>com.mia</groupId>
@@ -63,6 +70,13 @@
         <dependency>
             <groupId>com.mia</groupId>
             <artifactId>aegis-skill-demo</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- 开发平面 -->
+        <dependency>
+            <groupId>com.mia</groupId>
+            <artifactId>skill-editor</artifactId>
             <version>${project.version}</version>
         </dependency>
 

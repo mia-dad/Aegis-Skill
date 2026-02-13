@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,13 +14,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Skill 文件加载器。
+ * Skill 文件加载器（已弃用）。
  *
  * <p>从 classpath 的 skills 目录自动加载所有 .md 文件并解析为 Skill 对象。</p>
  *
  * <p>核心设计原则：{@code skillId + version} 是唯一标识。同一个 skillId 可能存在多个版本。</p>
+ *
+ * @deprecated 已迁移至 {@link com.mia.aegis.skill.persistence.repository.SkillRepository}，
+ *             技能统一从数据库加载。classpath 中的 .md 文件通过 SkillInitializer 在启动时导入数据库。
  */
-@Component
+@Deprecated
 public class SkillLoader {
 
     private static final Logger logger = LoggerFactory.getLogger(SkillLoader.class);

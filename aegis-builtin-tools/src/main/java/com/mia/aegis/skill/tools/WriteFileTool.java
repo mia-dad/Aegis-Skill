@@ -151,10 +151,8 @@ public class WriteFileTool extends AbstractBuiltinTool {
 
             // 写入输出上下文
             output.put("path", path);
-            output.put("bytesWritten", bytesWritten);
-            if (backupPath != null) {
-                output.put("backupPath", backupPath);
-            }
+            output.put("result", true);
+
 
         } catch (ToolExecutionException e) {
             throw e;
@@ -223,8 +221,7 @@ public class WriteFileTool extends AbstractBuiltinTool {
     public ToolSchema getOutputSchema() {
         Map<String, ToolSchema.ParameterSpec> params = new LinkedHashMap<String, ToolSchema.ParameterSpec>();
         params.put("path", ToolSchema.ParameterSpec.required("string", "Resolved file path"));
-        params.put("bytesWritten", ToolSchema.ParameterSpec.required("integer", "Number of bytes written"));
-        params.put("backupPath", ToolSchema.ParameterSpec.optional("string", "Backup file path (if created)"));
+        params.put("result", ToolSchema.ParameterSpec.required("boolean", "写入文件的结果"));
         return new ToolSchema(params);
     }
 

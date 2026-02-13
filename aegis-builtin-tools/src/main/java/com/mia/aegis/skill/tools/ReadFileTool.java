@@ -131,7 +131,7 @@ public class ReadFileTool extends AbstractBuiltinTool {
             String content = readFileContent(file);
 
             // 写入输出上下文
-            output.put("path", path);
+           // output.put("path", path);
 
             // JSON 格式时保持为字符串（内容本身就是 JSON 字符串）
             if ("json".equals(format)) {

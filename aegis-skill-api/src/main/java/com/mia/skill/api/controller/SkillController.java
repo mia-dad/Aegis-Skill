@@ -21,7 +21,7 @@ import com.mia.aegis.skill.llm.LLMAdapterRegistry;
 import com.mia.aegis.skill.i18n.Messages;
 import com.mia.skill.api.dto.SkillExecuteRequest;
 import com.mia.skill.api.dto.SkillExecuteResponse;
-import com.mia.skill.api.loader.SkillLoader;
+import com.mia.aegis.skill.persistence.repository.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,18 +43,18 @@ public class SkillController {
     private final SkillParser skillParser;
     private final SkillExecutor skillExecutor;
     private final LLMAdapterRegistry llmRegistry;
-    private final SkillLoader skillLoader;
+    private final SkillRepository skillRepository;
 
 
     @Autowired
     public SkillController(SkillParser skillParser,
-                           SkillLoader skillLoader,
+                           SkillRepository skillRepository,
                            SkillExecutor skillExecutor,
                            LLMAdapterRegistry llmRegistry) {
         this.skillParser = skillParser;
         this.skillExecutor = skillExecutor;
         this.llmRegistry = llmRegistry;
-        this.skillLoader = skillLoader;
+        this.skillRepository = skillRepository;
     }
 
     /**
@@ -100,7 +100,7 @@ public class SkillController {
      */
     @GetMapping("/skills")
     public ResponseEntity<List<com.mia.skill.api.dto.SkillInfo>> skills() {
-        List<Skill> skills = skillLoader.loadAllSkills();
+        List<Skill> skills = skillRepository.findAll();
         List<com.mia.skill.api.dto.SkillInfo> result = new ArrayList<com.mia.skill.api.dto.SkillInfo>();
 
         for (Skill skill : skills) {
@@ -127,9 +127,9 @@ public class SkillController {
 
         Skill skill;
         if (version != null && !version.isEmpty()) {
-            skill = skillLoader.findById(skillId, version);
+            skill = skillRepository.findById(skillId, version);
         } else {
-            skill = skillLoader.findById(skillId);
+            skill = skillRepository.findById(skillId);
         }
         if (skill == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -194,9 +194,9 @@ public class SkillController {
             if (hasSkillId) {
                 String reqVersion = request.getVersion();
                 if (reqVersion != null && !reqVersion.isEmpty()) {
-                    skill = skillLoader.findById(request.getSkillId(), reqVersion);
+                    skill = skillRepository.findById(request.getSkillId(), reqVersion);
                 } else {
-                    skill = skillLoader.findById(request.getSkillId());
+                    skill = skillRepository.findById(request.getSkillId());
                 }
                 if (skill == null) {
                     return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -321,7 +321,7 @@ public class SkillController {
      *
      * <p>支持两种方式指定 Skill：</p>
      * <ol>
-     *   <li>skillId（推荐）- 从 SkillLoader 加载</li>
+     *   <li>skillId（推荐）- 从 SkillRepository 加载</li>
      *   <li>skillMarkdown - 解析 Markdown 定义</li>
      * </ol>
      * <p>若同时提供，skillId 优先。</p>
@@ -394,9 +394,9 @@ public class SkillController {
             if (hasSkillId) {
                 String reqVersion = request.getVersion();
                 if (reqVersion != null && !reqVersion.isEmpty()) {
-                    skill = skillLoader.findById(request.getSkillId(), reqVersion);
+                    skill = skillRepository.findById(request.getSkillId(), reqVersion);
                 } else {
-                    skill = skillLoader.findById(request.getSkillId());
+                    skill = skillRepository.findById(request.getSkillId());
                 }
                 if (skill == null) {
                     return ResponseEntity.status(HttpStatus.NOT_FOUND)

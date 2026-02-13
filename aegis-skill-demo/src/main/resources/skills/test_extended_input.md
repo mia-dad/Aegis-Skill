@@ -7,6 +7,10 @@ intent: 测试扩展输入
 
 # skill: test_extended_input
 
+
+## description
+测试扩展 Input Schema 格式的 Skill
+
 ## intent
 
 - 测试扩展输入格式
@@ -105,8 +109,15 @@ echo_result:
 
 **type**: tool
 **tool**: log
-**varName**: echo_result
 
 ```yaml
-message: "收到输入: company={{company}}, period={{period}},metrics={{metrics}},amount={{amount}},notes={{notes}},confirmed={{confirmed}}"
+input:
+  message: "收到输入: company={{company}}, period={{period}},metrics={{metrics}},amount={{amount}},notes={{notes}},confirmed={{confirmed}}"
+output_schema:
+  logged:
+    type: boolean
+    description: 日记记录成功与否
+  level:
+    type: string
+    description: 日志记录的级别
 ```

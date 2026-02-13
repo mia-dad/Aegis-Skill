@@ -4,7 +4,8 @@
 
 1.0.0
 
-**description**: 订单确认示例 - 演示 await step 的人机交互功能
+## description
+订单确认示例 - 演示 await step 的人机交互功能
 
 ## input_schema
 

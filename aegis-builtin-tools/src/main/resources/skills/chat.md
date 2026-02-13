@@ -18,7 +18,9 @@
 ## input_schema
 
 ```yaml
-prompt: string
+prompt: 
+  type: string
+  description: 用户的问题 
 ```
 
 ## output_schema

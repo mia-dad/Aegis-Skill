@@ -413,6 +413,23 @@ public class MarkdownSkillParser implements SkillParser {
                         currentContent.append(paragraphText).append("\n");
                     }
                 }
+            } else if (node instanceof IndentedCodeBlock) {
+                // 处理缩进代码块（4空格缩进的文本会被 CommonMark 解析为 IndentedCodeBlock）
+                // 在 description 和 version 段落下，应视为普通文本
+                String codeText = ((IndentedCodeBlock) node).getLiteral().trim();
+                if (currentSection != null && !codeText.isEmpty()) {
+                    if ("version".equals(currentSection)) {
+                        if (version == null) {
+                            version = codeText;
+                        }
+                    } else if ("description".equals(currentSection)) {
+                        if (description == null) {
+                            description = codeText;
+                        } else {
+                            description += "\n" + codeText;
+                        }
+                    }
+                }
             } else if (node instanceof BulletList && "intent".equals(currentSection)) {
                 // 解析 intent 列表
                 parseIntentList((BulletList) node, intents);

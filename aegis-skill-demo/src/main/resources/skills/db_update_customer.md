@@ -75,7 +75,8 @@ output_schema:
 
 ### step: build_result
 
-**type**: template  **varName**: message
+**type**: template  
+**varName**: message
 
 ```template
 客户 {{customer_id}} 更新完成，影响 {{affectedRows}} 行

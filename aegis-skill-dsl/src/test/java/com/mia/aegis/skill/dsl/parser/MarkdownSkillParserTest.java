@@ -256,6 +256,17 @@ class MarkdownSkillParserTest {
     }
 
     @Test
+    @DisplayName("应该解析缩进格式的 description（IndentedCodeBlock）")
+    void shouldParseIndentedDescription() throws Exception {
+        // 4空格缩进的文本在 CommonMark 中是 IndentedCodeBlock，解析器应能正确提取
+        String content = "# skill: test\n\n## version\n\n1.0.0\n\n## description\n\n    缩进描述文本\n\n## steps\n\n### step: test\n\n**type**: prompt\n**varName**: result\n\n```prompt\ntest\n```\n";
+
+        Skill skill = parser.parse(content);
+
+        assertThat(skill.getDescription()).isEqualTo("缩进描述文本");
+    }
+
+    @Test
     @DisplayName("应该解析多个步骤")
     void shouldParseMultipleSteps() throws Exception {
         String content = "# skill: test\n\n## version\n\n1.0.0\n\n## steps\n\n### step: step1\n\n**type**: tool\n**tool**: tool1\n\n```yaml\nparam: value\n```\n\n### step: step2\n\n**type**: prompt\n\n```prompt\ntemplate\n```\n\n### step: step3\n\n**type**: tool\n**tool**: tool3\n\n```yaml\nq: test\n```\n";

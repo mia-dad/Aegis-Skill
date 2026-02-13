@@ -12,6 +12,7 @@
         <!-- 核心模块 -->
         <module>aegis-skill-tools</module>
         <module>aegis-skill-dsl</module>
+        <module>aegis-skill-persistence</module>
         <module>aegis-builtin-tools</module>
 
         <!-- 技能包模块 -->
@@ -19,6 +20,9 @@
         <module>aegis-skill-financial</module>
         <module>aegis-skill-sales</module>
         <module>aegis-skill-demo</module>
+
+        <!-- 开发平面 -->
+        <module>development-plane</module>
 
         <!-- 应用模块 -->
         <module>aegis-skill-api</module>

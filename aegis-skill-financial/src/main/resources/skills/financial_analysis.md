@@ -46,11 +46,15 @@ report:
 
 **type**: tool
 **tool**: get_financial_data
-**varName**: financial_data
 
 ```yaml
-company: "{{company}}"
-period: "{{period}}"
+input:
+  company: "{{company}}"
+  period: "{{period}}"
+output_schema:
+  data:
+    type: string
+    description: 获取的数据结果
 ```
 
 ### step: analyze_data
@@ -64,7 +68,7 @@ period: "{{period}}"
 用户问题：{{query}}
 
 请分析 {{company}} 在 {{period}} 期间的财务数据：
-{{financial_data}}
+{{data}}
 
 请给出专业、清晰的财务分析报告。
 ```

@@ -135,11 +135,7 @@ public class LogTool extends BuiltInTool {
             // 构建结果
             output.put("logged", true);
             output.put("level", level);
-            output.put("message", message);
-            output.put("timestamp", timestamp);
-            if (data != null) {
-                output.put("data", String.valueOf(data));
-            }
+
 
         } catch (Exception e) {
             throw new ToolExecutionException(NAME, "Failed to log: " + e.getMessage(), e);
@@ -191,9 +187,6 @@ public class LogTool extends BuiltInTool {
         Map<String, ToolSchema.ParameterSpec> params = new LinkedHashMap<String, ToolSchema.ParameterSpec>();
         params.put("logged", ToolSchema.ParameterSpec.required("boolean", "Whether log was output"));
         params.put("level", ToolSchema.ParameterSpec.required("string", "Log level"));
-        params.put("message", ToolSchema.ParameterSpec.required("string", "Log message"));
-        params.put("timestamp", ToolSchema.ParameterSpec.required("string", "Log timestamp (ISO 8601)"));
-        params.put("data", ToolSchema.ParameterSpec.optional("object", "Additional data"));
         return new ToolSchema(params);
     }
 

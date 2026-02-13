@@ -65,7 +65,7 @@ public class SkillExecuteRequest {
     /**
      * Skill ID（优先级高于 skillMarkdown）。
      *
-     * <p>用于从 SkillLoader 加载预定义的 Skill。</p>
+     * <p>用于从 SkillRepository 加载预定义的 Skill。</p>
      */
     private String skillId;
 

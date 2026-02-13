@@ -4,7 +4,9 @@
 
 1.0.0
 
-**description**: 演示 Aegis 内置 Tools 的使用方法
+## description
+
+演示 Aegis 内置 Tools 的使用方法
 
 ## input_schema
 
@@ -26,10 +28,14 @@ data_file:
 
 **type**: tool
 **tool**: read_file
-**varName**: source_data
 
 ```yaml
-path: "{{data_file}}"
+input:
+  path: "{{data_file}}"
+output_schema:
+  content:
+    type: string
+    description: 文件数据的内容
 ```
 
 ### step: process_data
@@ -40,7 +46,7 @@ path: "{{data_file}}"
 ```template
 根据以下数据生成{{report_type}}报告：
 
-{{source_data}}
+{{content}}
 
 要求：
 1. 提取关键指标
@@ -52,12 +58,19 @@ path: "{{data_file}}"
 
 **type**: tool
 **tool**: write_file
-**varName**: write_result
 
 ```yaml
-path: "output/{{report_type}}_report.md"
-content: "{{report_content}}"
-format: txt
+input:
+  path: "output/{{report_type}}_report.md"
+  content: "{{report_content}}"
+  format: txt
+output_schema:
+  result:
+    type: boolean
+    description: 写入文件的结果
+  path:
+    type: string
+    description: Resolved file path
 ```
 
 ### step: transform_result

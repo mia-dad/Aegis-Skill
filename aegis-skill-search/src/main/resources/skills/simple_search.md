@@ -18,7 +18,9 @@
 ## input_schema
 
 ```yaml
-query: string
+query: 
+  type: string
+  description: 搜索关键词
 ```
 
 ## output_schema
@@ -81,8 +83,21 @@ results:
 
 **type**: tool
 **tool**: builtin_web_search
-**varName**: search_result
 
 ```yaml
-query: "{{query}}"
+input:
+  query: "{{query}}"
+output_schema:
+  query:
+    type: string
+    description: 搜索查询词
+  resultCount:
+    type: integer
+    description: 结果数量
+  executionTime:
+    type: integer
+    description: 执行时间（毫秒）
+  results:
+    type: array
+    description: 搜索结果列表
 ```

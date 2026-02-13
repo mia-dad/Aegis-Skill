@@ -4,12 +4,15 @@
 
 1.0.0
 
-**description**: 测试技能
+## description
+测试技能
 
 ## input_schema
 
 ```yaml
-query: string
+query: 
+  type: string
+  description: 测试输入
 ```
 
 ## output_schema

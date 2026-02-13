@@ -4,7 +4,7 @@ import com.mia.aegis.skill.dsl.model.Skill;
 import com.mia.aegis.skill.executor.context.ExecutionContext;
 import com.mia.aegis.skill.executor.context.SkillResult;
 import com.mia.aegis.skill.executor.engine.SkillExecutor;
-import com.mia.skill.api.loader.SkillLoader;
+import com.mia.aegis.skill.persistence.repository.SkillRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,16 +21,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class SalesReportIntegrationTest {
 
     @Autowired
-    private SkillLoader skillLoader;
+    private SkillRepository skillRepository;
 
     @Autowired
     private SkillExecutor skillExecutor;
 
     @Test
     void testSalesReportGenerator() throws Exception {
-        // 从 SkillLoader 获取所有技能，找到 sales_report_generator
+        // 从 SkillRepository 获取所有技能，找到 sales_report_generator
         Skill targetSkill = null;
-        for (Skill skill : skillLoader.loadAllSkills()) {
+        for (Skill skill : skillRepository.findAll()) {
             if ("sales_report_generator".equals(skill.getId())) {
                 targetSkill = skill;
                 break;
